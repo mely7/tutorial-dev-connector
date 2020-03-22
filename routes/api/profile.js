@@ -114,9 +114,9 @@ router.get('/', async (req, res) => {
 // @route GET api/profile/user/:user_id
 // @desc Get profile by user ID
 // @access Public
-router.get('/user/:userId', async (req, res) => {
+router.get('/user/:user_id', async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.params.userId }).populate('user', ['name', 'avatar']);
+    const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
 
     if (!profile) {
       return res.status(400).json({ msg: 'Profile not found' });
@@ -196,14 +196,14 @@ router.put('/experience', [auth, [
   }
 });
 
-// @route DELETE api/profile/experience/:expId
+// @route DELETE api/profile/experience/:exp_id
 // @desc Delete experience from profile
 // @access Private
-router.delete('/experience/:expId', auth, async (req, res) => {
+router.delete('/experience/:exp_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user:req.user.id });
     // Get remove index
-    const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.expId);
+    const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
     profile.experience.splice(removeIndex, 1);
     await profile.save();
     res.json(profile);
@@ -259,14 +259,14 @@ router.put('/education', [auth, [
   }
 });
 
-// @route DELETE api/profile/education/:expId
+// @route DELETE api/profile/education/:edu_id
 // @desc Delete education from profile
 // @access Private
-router.delete('/education/:eduId', auth, async (req, res) => {
+router.delete('/education/:edu_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user:req.user.id });
     // Get remove index
-    const removeIndex = profile.education.map(item => item.id).indexOf(req.params.eduId);
+    const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
     profile.education.splice(removeIndex, 1);
     await profile.save();
     res.json(profile);
