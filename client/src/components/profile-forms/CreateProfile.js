@@ -1,8 +1,10 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createProfile } from '../../actions/profile';
+import { Link, withRouter } from 'react-router-dom';
 
-const CreateProfile = props => {
+const CreateProfile = ({ createProfile, history }) => {
   const [ formData, setFormData ] = useState({
     company: '',
     website: '',
@@ -42,6 +44,11 @@ const CreateProfile = props => {
     });
   };
 
+  const onSubmit = e => {
+    e.preventDefault();
+    createProfile(formData, history);
+  };
+
   return (
     <Fragment>
       <h1 className="large text-primary">
@@ -54,7 +61,7 @@ const CreateProfile = props => {
       <small>
         * = required field
       </small>
-      <form className="form">
+      <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <select name="status" value={status} onChange={e => onChange(e)}>
             <option value="0">* Select Professional Status</option>
@@ -96,11 +103,7 @@ const CreateProfile = props => {
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="Github Username"
-            name="githubusername"
-          />
+          <input type="text" placeholder="Github Username" name="githubusername" value={githubusername} onChange={e => onChange(e)} />
           <small className="form-text">
             If you want your latest repos and a Github link, include your username
           </small>
@@ -149,14 +152,14 @@ const CreateProfile = props => {
         )}
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        <Link to="/dashboard" className="btn btn-light my-1">Go Back</Link>
       </form>
     </Fragment>
   )
 };
 
 CreateProfile.propTypes = {
-
+  createProfile: PropTypes.func.isRequired
 };
 
-export default CreateProfile;
+export default connect(null, { createProfile })(withRouter(CreateProfile));
