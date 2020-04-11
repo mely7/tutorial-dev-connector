@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://mely:Mely123@devconnector-isink.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "2e1e50c70baeb34c1709",
+  "githubSecret": "3b54026a294ad2c204a24c369be0beeac782f278"
+}
