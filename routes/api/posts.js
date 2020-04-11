@@ -150,7 +150,7 @@ router.put('/comment/:post_id', [auth, [
   
     await post.save();
 
-    res.json(post);
+    res.json(post.comments);
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') return res.status(404).json({ msg: 'Post does no exist' });
